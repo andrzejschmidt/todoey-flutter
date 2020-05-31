@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/task_list.dart';
 import './add_task_modal.dart';
+import 'package:provider/provider.dart';
+import '../models/task_data.dart';
 
 class TaskScreen extends StatelessWidget {
   @override
@@ -10,18 +12,21 @@ class TaskScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+            ),
+            builder: (context) => SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: AddTaskModal(),
               ),
-              builder: (context) => SingleChildScrollView(
-                      child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: AddTaskScreen(),
-                  )));
+            ),
+          );
         },
         backgroundColor: Colors.lightBlue[300],
         child: Icon(
@@ -57,7 +62,7 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22.0,
