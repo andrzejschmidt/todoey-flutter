@@ -32,9 +32,11 @@ class AddTaskModal extends StatelessWidget {
           FlatButton(
             color: Colors.lightBlue[300],
             onPressed: () {
-              Provider.of<TaskData>(context, listen: false)
-                  .addNewTask(newTaskTitle);
-              Navigator.pop(context);
+              if (newTaskTitle != null) {
+                Provider.of<TaskData>(context, listen: false)
+                    .addNewTask(newTaskTitle);
+                Navigator.pop(context);
+              }
             },
             child: Text(
               'Add',
