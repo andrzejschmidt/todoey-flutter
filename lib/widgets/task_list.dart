@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './task_tile.dart';
 import 'package:provider/provider.dart';
+import './task_tile.dart';
 import '../models/task_data.dart';
 
 class TasksList extends StatelessWidget {
@@ -12,14 +12,17 @@ class TasksList extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           itemCount: taskData.taskCount,
           itemBuilder: (context, index) {
+            final task = taskData.tasks[index];
             return TaskTile(
-                taskName: taskData.tasks[index].taskName,
-                isChecked: taskData.tasks[index].isCompleted,
-                toggleDone: (isChecked) {
-                  // setState(() {
-                  //   taskDatatasks.[index].toggleComplete();
-                  // });
-                });
+              taskName: task.taskName,
+              isChecked: task.isCompleted,
+              toggleDone: (isChecked) {
+                taskData.updateTask(task);
+              },
+              removeFromList: () {
+                taskData.removeTask(task);
+              },
+            );
           },
         );
       },
